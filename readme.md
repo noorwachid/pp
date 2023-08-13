@@ -2,7 +2,7 @@
 Clean pragramming language with all modern C++ features
 
 Compile to C++
-~~~ cs
+~~~ ruby
 # TYPE INSTANCIATION
 # typed
 # cpp: int typed = 10

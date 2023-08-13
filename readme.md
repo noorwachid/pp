@@ -114,16 +114,16 @@ use OS
 
 class Enemy {
 	# by convention leading underscore is private
-    # namespace access :: is replaced by .
+	# namespace access :: is replaced by .
 	var _id: ECS.ID
 	var _name: String
 	var _age: Int
 	var _health: Int
 	var _damage: Int
 
-    func restore() {
+	func restore() {
 		_health = 100
-    }
+	}
 
 	# overridable by derived class
 	virtualize func attack(refer var player: Player) {

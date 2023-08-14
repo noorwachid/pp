@@ -87,7 +87,7 @@ var dictionary: Dictionary<String, String> = {
 
 # key, value type without hash table
 # Array<Tuple<Key, Value>> as underlying memory layout 
-var flatDictionary: flatDictionary<String, String> = {
+var flatDictionary: FlatDictionary<String, String> = {
 	"int" = "",
 }
 

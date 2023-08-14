@@ -82,7 +82,7 @@ var dictionary: Dictionary<String, String> = {
 
 # key, value type without hash table
 # Array<Tuple<Key, Value>> as underlying memory layout 
-var thesaurus: Thesaurus<String, String> = {
+var flatDictionary: FlatDictionary<String, String> = {
 	"int" = "",
 }
 
@@ -156,7 +156,7 @@ class Vector {
 		return Math.sqrt(x * x + y * y + z * z)
 	}
 
-	operate func mult(other: &Vector) -> Vector {
+	operate func multiply(other: Vector) -> Vector {
 		return 
 	}
 }
@@ -207,7 +207,7 @@ for var i = 0; i < 10; i++ {
 }
 
 # range-based loop
-for i in 1...10 {
+for var i in 1...10 {
 	print(i)
 }
 

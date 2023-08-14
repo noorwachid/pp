@@ -40,6 +40,9 @@ pointerOfAnimal = new Animal()
 # syntactic sugar for (*pointerOfInt).speak()
 pointerOfAnimal:speak()
 
+# syntactic sugar for if pointerOfInt { pointerOfInt:speak() }
+pointerOfAnimal?:speak()
+
 
 # reference
 # cpp: int& referenceOfInt = int
@@ -82,13 +85,13 @@ var mirageArray = MirageArray<Int, 2>(fixedArray.data + 1, 2)
 
 # key, value type with hash table
 var dictionary: Dictionary<String, String> = {
-	"int" = "",
+	"key" = "value",
 }
 
 # key, value type without hash table
 # Array<Tuple<Key, Value>> as underlying memory layout 
 var flatDictionary: FlatDictionary<String, String> = {
-	"int" = "",
+	"key" = "value",
 }
 
 # USER DEFINED TYPE
@@ -103,10 +106,7 @@ enum State {
 
 # namespace 
 namespace OS {
-	# struct cannot hold method, constructor and destructor
-	struct WindowData {
-		var title: String
-	}
+	const systemName: String = "darwin"
 }
 
 # bleed the namespace to the current file only

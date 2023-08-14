@@ -38,9 +38,16 @@ string toString(TokenType type) {
 	}
 }
 
+struct Pos {
+	size_t line;
+	size_t column;
+};
+
 struct Token {
 	TokenType type;
 	string_view value;
+	Pos from;
+	Pos to;
 };
 
 class Lexer {
@@ -49,14 +56,25 @@ public:
 		this->content = content;
 		this->index = 0;
 
+		prevPos.line = 1;
+		prevPos.column = 1;
+
+		currPos.line = 1;
+		currPos.column = 1;
+
 		tokenize();
 
+		cout << "[TOKEN]\n";
 		for (const Token& token : tokens) {
-			cout << toString(token.type) << " " << token.value << "\n";
+			cout << token.from.line << ":" << token.from.column
+				<< "," 
+				<< token.to.line << ":" << token.to.column
+				<< " " << toString(token.type) << " " << token.value << "\n";
 		}
+		cout << "\n";
 	}
 
-	const vector<Token>& get() {
+	const vector<Token>& get() const {
 		return tokens;
 	}
 
@@ -125,19 +143,24 @@ private:
 						advance(0);
 					}
 
+					retreat(0);
+
 					string_view symbol = content.substr(offset, size);
 
 					if (symbol == "var") {
 						add(TokenType::keywordVar, symbol);
+						advance(0);
 						break;
 					}
 
 					if (symbol == "const") {
-						add(TokenType::keywordVar, symbol);
+						add(TokenType::keywordConst, symbol);
+						advance(0);
 						break;
 					}
 
 					add(TokenType::symbol, symbol);
+					advance(0);
 					break;
 				}
 
@@ -193,8 +216,25 @@ private:
 					}
 					break;
 
-				default:
+				case '\n': {
+					prevPos.line++;
+					prevPos.column = 1;
+					currPos.line++;
+					currPos.column = 0;
 					advance(0);
+					break;
+				}
+
+				case ' ': {
+					advance(0);
+					prevPos.column = currPos.column;
+					break;
+				}
+
+				default: {
+					advance(0);
+					break;
+				}
 			}
 
 		}
@@ -230,16 +270,28 @@ private:
 	}
 
 	void advance(size_t rindex) {
+		currPos.column += rindex + 1;
 		index += rindex + 1;
+	}
+
+	void retreat(size_t rindex) {
+		currPos.column -= rindex + 1;;
+		index -= rindex + 1;
 	}
 
 	void add(TokenType type, string_view value) {
 		Token token;
 		token.type = type;
 		token.value = value;
+		token.from = prevPos;
+		token.to = currPos;
 		tokens.push_back(token);
+		prevPos = currPos;
+		prevPos.column++;
 	}
 
+	Pos currPos;
+	Pos prevPos;
 	size_t index;
 	string_view content;
 	vector<Token> tokens;

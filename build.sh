@@ -1,1 +1,1 @@
-clang++ -o csq -std=c++17 source/main.cpp
+clang++ -o pp -std=c++17 source/main.cpp

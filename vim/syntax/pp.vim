@@ -8,7 +8,7 @@ if exists("b:current_syntax")
 endif
 
 " Inlines
-syn match ppComment "# .*$" 
+syn match ppComment "#.*$" 
 syn keyword ppKeyword const var refer move as
 syn keyword ppKeyword func return
 syn keyword ppKeyword namespace use class struct operate mutate virtualize override get set
